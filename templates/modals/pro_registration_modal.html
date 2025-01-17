@@ -1,0 +1,85 @@
+<!-- Professional Registration Modal -->
+<div class="modal fade" id="proRegistrationModal" tabindex="-1" aria-labelledby="proRegistrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="proRegistrationModalLabel">Register as a Professional</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="proRegistrationForm">
+                    <!-- Business Information -->
+                    <h6 class="mb-3">Business Information</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-business-name" class="form-label">Business Name</label>
+                            <input type="text" class="form-control" id="pro-business-name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-contact-name" class="form-label">Contact Person</label>
+                            <input type="text" class="form-control" id="pro-contact-name" required>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-email" class="form-label">Business Email</label>
+                            <input type="email" class="form-control" id="pro-email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-phone" class="form-label">Business Phone</label>
+                            <input type="tel" class="form-control" id="pro-phone" required>
+                        </div>
+                    </div>
+
+                    <!-- Services and Locations -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-services" class="form-label">Services Offered</label>
+                            <select class="form-select" id="pro-services" multiple required>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Cmd to select multiple services</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-locations" class="form-label">Service Areas</label>
+                            <select class="form-select" id="pro-locations" multiple required>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Cmd to select multiple locations</small>
+                        </div>
+                    </div>
+
+                    <!-- License and Insurance -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-license" class="form-label">License Number (if applicable)</label>
+                            <input type="text" class="form-control" id="pro-license">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-insurance" class="form-label">Insurance Information</label>
+                            <input type="text" class="form-control" id="pro-insurance">
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="pro-description" class="form-label">Business Description</label>
+                        <textarea class="form-control" id="pro-description" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="pro-terms" required>
+                        <label class="form-check-label" for="pro-terms">
+                            I agree to the Terms and Conditions and Privacy Policy
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Submit Registration</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

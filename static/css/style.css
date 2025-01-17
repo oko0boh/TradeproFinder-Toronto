@@ -1,0 +1,384 @@
+/* Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #2c3e50;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #3498db !important;
+}
+
+/* Section Styles */
+.section {
+    padding: 4rem 0;
+}
+
+.section-light {
+    background-color: #ffffff;
+}
+
+.section-gray {
+    background-color: #f8f9fa;
+}
+
+.section-blue {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+/* Features Section */
+#features {
+    background-color: #f8f9fa;
+    padding: 5rem 0;
+}
+
+.feature-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card i {
+    color: #3498db;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: #fff;
+    padding: 5rem 0;
+}
+
+.hero-section h1 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+/* Testimonials Section */
+#testimonials {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: #fff;
+    padding: 5rem 0;
+}
+
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    height: 100%;
+    backdrop-filter: blur(5px);
+}
+
+.testimonial-card .rating {
+    color: #f1c40f;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Service Links Grid */
+.service-links-grid {
+    padding: 3rem 0;
+    background-color: #ffffff;
+}
+
+.service-item {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.service-icon {
+    color: #0066ff;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.get-help-text {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-title {
+    color: #0066ff;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.service-title:hover {
+    text-decoration: underline;
+}
+
+/* Popular Services Section */
+#popular-services {
+    background-color: #ffffff;
+    padding: 5rem 0;
+}
+
+.service-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    height: 100%;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card i {
+    font-size: 2.5rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+/* Popular Services Cards */
+.service-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.service-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.service-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+}
+
+/* Service Card Colors */
+.service-plumber {
+    background: linear-gradient(135deg, #4FC3F7, #2196F3);
+}
+
+.service-electrician {
+    background: linear-gradient(135deg, #66BB6A, #43A047);
+}
+
+.service-hvac {
+    background: linear-gradient(135deg, #FF7043, #F4511E);
+}
+
+.service-painter {
+    background: linear-gradient(135deg, #7E57C2, #5E35B1);
+}
+
+.service-carpenter {
+    background: linear-gradient(135deg, #8D6E63, #5D4037);
+}
+
+.service-roofer {
+    background: linear-gradient(135deg, #546E7A, #37474F);
+}
+
+.service-landscaper {
+    background: linear-gradient(135deg, #9CCC65, #7CB342);
+}
+
+.service-handyman {
+    background: linear-gradient(135deg, #FFB74D, #FF9800);
+}
+
+.service-general-contractor {
+    background: linear-gradient(135deg, #5C6BC0, #3949AB);
+}
+
+/* Search Section */
+.search-section {
+    background-color: #fff;
+    padding: 2rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Footer Styles */
+.footer-section {
+    background: #2c3e50;  /* Dark blue background */
+    color: #fff;
+    padding: 4rem 0 2rem;
+}
+
+.footer-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact li {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-contact i {
+    margin-right: 10px;
+    width: 20px;
+    color: #3498db;
+}
+
+.social-links {
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    margin-right: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #3498db;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-bottom-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+    margin-left: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section {
+        padding: 3rem 0;
+    }
+    
+    .hero-section {
+        padding: 3rem 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    .service-item {
+        padding: 1rem;
+    }
+    
+    .service-icon {
+        font-size: 1.25rem;
+    }
+    
+    .get-help-text {
+        font-size: 1rem;
+    }
+    
+    .service-title {
+        font-size: 0.85rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .footer-bottom-links {
+        justify-content: center;
+    }
+}

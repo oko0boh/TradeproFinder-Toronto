@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Tradepro Finder Toronto{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="text-center mb-5">About Tradepro Finder Toronto</h1>
+            
+            <p class="lead mb-4">Welcome to Tradepro Finder Toronto, your premier platform connecting homeowners with verified trade professionals across the Greater Toronto Area. We're revolutionizing how people find and hire skilled trades workers through our innovative, user-friendly platform.</p>
+
+            <!-- Core Values -->
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Trust</h3>
+                        <p>All professionals are thoroughly vetted and verified for your peace of mind.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <i class="fas fa-star"></i>
+                        <h3>Quality</h3>
+                        <p>We partner with only the most skilled and highly-rated professionals.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Service</h3>
+                        <p>Dedicated to providing exceptional service and support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <h2 class="mb-4">Our Features</h2>
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3>For Homeowners</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-search"></i> Advanced search functionality</li>
+                        <li><i class="fas fa-star"></i> Verified professional profiles</li>
+                        <li><i class="fas fa-comments"></i> Easy quote requests</li>
+                        <li><i class="fas fa-mobile-alt"></i> Mobile-friendly interface</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Location-based matching</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>For Professionals</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-user-tie"></i> Professional registration</li>
+                        <li><i class="fas fa-briefcase"></i> Business profile management</li>
+                        <li><i class="fas fa-chart-line"></i> Lead generation</li>
+                        <li><i class="fas fa-bell"></i> Quote request notifications</li>
+                        <li><i class="fas fa-globe"></i> Expanded market reach</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Coverage -->
+            <h2 class="mb-4">Service Coverage</h2>
+            <p>We proudly serve the entire Greater Toronto Area, including:</p>
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <ul class="location-list">
+                        <li>Toronto</li>
+                        <li>North York</li>
+                        <li>Scarborough</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="location-list">
+                        <li>Etobicoke</li>
+                        <li>Mississauga</li>
+                        <li>Brampton</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="location-list">
+                        <li>Markham</li>
+                        <li>Richmond Hill</li>
+                        <li>Vaughan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Future Plans -->
+            <h2 class="mb-4">Future Improvements</h2>
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3>Coming Soon</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-user-circle"></i> User accounts</li>
+                        <li><i class="fas fa-calendar-alt"></i> Online booking system</li>
+                        <li><i class="fas fa-comments"></i> In-app messaging</li>
+                        <li><i class="fas fa-mobile-alt"></i> Mobile app</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Enhanced Features</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-filter"></i> Advanced search filters</li>
+                        <li><i class="fas fa-star-half-alt"></i> Review system</li>
+                        <li><i class="fas fa-file-invoice"></i> Quote comparisons</li>
+                        <li><i class="fas fa-history"></i> Project tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-5">
+                <h2 class="mb-4">Ready to Get Started?</h2>
+                <div class="d-flex justify-content-center gap-3">
+                    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#quoteModal">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Get a Quote
+                    </button>
+                    <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#proRegistrationModal">
+                        <i class="fas fa-user-tie me-2"></i>Register as Pro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.value-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s;
+    height: 100%;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.value-card i {
+    color: #3498db;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list i {
+    color: #3498db;
+    margin-right: 1rem;
+    width: 20px;
+}
+
+.location-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.location-list li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+}
+
+.lead {
+    color: #34495e;
+}
+</style>
+{% endblock %}

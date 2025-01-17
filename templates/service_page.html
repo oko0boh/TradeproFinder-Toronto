@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{ title }}</title>
+<meta name="description" content="{{ meta_description }}">
+<meta name="keywords" content="{{ category }}, {{ location }}, services, professional, trusted, reliable">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{ title }}",
+    "description": "{{ meta_description }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "Tradepro Finder Toronto",
+        "areaServed": "{{ location }}"
+    },
+    "serviceType": "{{ category }}",
+    "areaServed": {
+        "@type": "City",
+        "name": "{{ location }}"
+    }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Service Description -->
+<section class="service-description py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {{ service_description|safe }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Results -->
+<section class="search-results-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>{{ category }} Professionals in {{ location }}</h2>
+                <div id="search-results" class="row mt-4">
+                    {% if search_results and search_results.places %}
+                        {% for place in search_results.places %}
+                        <div class="col-md-6 mb-4">
+                            <div class="business-card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">{{ place.name }}</h5>
+                                    
+                                    <div class="business-info">
+                                        {% if place.address %}
+                                        <p class="mb-2">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{ place.address }}
+                                        </p>
+                                        {% endif %}
+                                        
+                                        {% if place.phone %}
+                                        <p class="mb-2">
+                                            <i class="fas fa-phone"></i>
+                                            {{ place.phone }}
+                                        </p>
+                                        {% endif %}
+                                        
+                                        {% if place.rating %}
+                                        <p class="mb-2">
+                                            <span class="rating-stars">
+                                                {% for i in range(place.rating|int) %}
+                                                <i class="fas fa-star"></i>
+                                                {% endfor %}
+                                                {% if place.rating % 1 >= 0.5 %}
+                                                <i class="fas fa-star-half-alt"></i>
+                                                {% endif %}
+                                            </span>
+                                            {{ place.rating }}
+                                            {% if place.reviews %}({{ place.reviews }} reviews){% endif %}
+                                        </p>
+                                        {% endif %}
+                                        
+                                        {% if place.opening_hours %}
+                                        <p class="mb-2">
+                                            <i class="fas fa-clock"></i>
+                                            <span class="{{ 'open-badge' if place.opening_hours.open_now else 'closed-badge' }}">
+                                                {{ 'Open Now' if place.opening_hours.open_now else 'Closed' }}
+                                            </span>
+                                        </p>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mt-3 d-flex flex-wrap gap-2">
+                                        {% if place.phone %}
+                                        <a href="tel:{{ place.phone }}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-phone"></i> Call
+                                        </a>
+                                        {% endif %}
+                                        
+                                        {% if place.website %}
+                                        <a href="{{ place.website }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                                            <i class="fas fa-globe"></i> Website
+                                        </a>
+                                        {% endif %}
+                                        
+                                        <button class="btn btn-success btn-sm" onclick='openQuoteModal({{ place|tojson|safe }})'>
+                                            <i class="fas fa-file-invoice-dollar"></i> Get Quote
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12">
+                            <p class="text-center">No results found. Please try a different search.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

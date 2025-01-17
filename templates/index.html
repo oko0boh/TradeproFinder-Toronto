@@ -1,0 +1,662 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    /* Hero Section Styles */
+    .hero-section {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        padding: 5rem 0;
+        color: white;
+        text-align: center;
+        margin-top: -76px;
+        padding-top: calc(76px + 5rem);
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+    }
+
+    /* Search Form Styles */
+    .search-form {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .form-select-lg {
+        height: 50px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+    .btn-lg {
+        height: 50px;
+    }
+
+    /* Search Results Styles */
+    .search-results {
+        padding: 2rem 0;
+    }
+
+    .business-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s;
+    }
+
+    .business-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .business-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .business-info {
+        margin-bottom: 1rem;
+    }
+
+    .business-info i {
+        width: 20px;
+        color: #3498db;
+        margin-right: 0.5rem;
+    }
+
+    .rating-stars {
+        color: #f1c40f;
+        margin-right: 0.5rem;
+    }
+
+    .open-badge {
+        background: #2ecc71;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+    }
+
+    .closed-badge {
+        background: #e74c3c;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+    }
+
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 3rem 0;
+            padding-top: calc(76px + 3rem);
+        }
+
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+
+        .search-form {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-10">
+                <h1>Find Trusted Trade Professionals in Toronto</h1>
+                <p class="lead mb-4">Connect with verified experts for your home improvement and repair needs</p>
+                
+                <!-- Search Form -->
+                <form id="search-form" class="search-form mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <select id="category-select" class="form-select form-select-lg" required>
+                                <option value="">Select Service Type</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <select id="location-select" class="form-select form-select-lg" required>
+                                <option value="">Select Location</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Results Section -->
+<section id="search-results-section" class="py-5" style="display: none;">
+    <div class="container">
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="text-center" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        
+        <!-- Results Count -->
+        <h2 id="total-results" class="text-center mb-4"></h2>
+        
+        <!-- Results Container -->
+        <div id="search-results" class="row"></div>
+        
+        <!-- Load More Button -->
+        <div class="text-center mt-4">
+            <button id="load-more-btn" class="btn btn-outline-primary" style="display: none;">
+                Load More Results
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-primary btn-lg me-3" id="getQuoteBtn">
+                    <i class="fas fa-file-invoice-dollar me-2"></i>Get a Pro Quote
+                </button>
+                <button class="btn btn-success btn-lg" id="registerProBtn">
+                    <i class="fas fa-user-tie me-2"></i>Register as a Pro
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Us</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-check-circle fa-3x mb-3 text-primary"></i>
+                    <h3>Verified Professionals</h3>
+                    <p>All trade workers are thoroughly vetted and verified.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-star fa-3x mb-3 text-primary"></i>
+                    <h3>Trusted Reviews</h3>
+                    <p>Read authentic reviews from real customers.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <i class="fas fa-dollar-sign fa-3x mb-3 text-primary"></i>
+                    <h3>Free Quotes</h3>
+                    <p>Get multiple quotes with no obligation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Users Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <div class="testimonial-content">
+                        <p class="mb-3">"Found an amazing plumber through this platform. Quick response and excellent work!"</p>
+                        <div class="rating mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 class="mb-0">John D.</h5>
+                        <small>Homeowner</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <div class="testimonial-content">
+                        <p class="mb-3">"Great platform for finding reliable contractors. Easy to use and very helpful!"</p>
+                        <div class="rating mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <h5 class="mb-0">Sarah M.</h5>
+                        <small>Property Manager</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card text-center">
+                    <div class="testimonial-content">
+                        <p class="mb-3">"As a contractor, this platform has helped me connect with many new clients!"</p>
+                        <div class="rating mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 class="mb-0">Mike R.</h5>
+                        <small>Professional Contractor</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'sections/popular_services.html' %}
+
+<!-- Quote Modal -->
+<div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quoteModalLabel">Get a Professional Quote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="quote-form">
+                    <div class="mb-3">
+                        <label for="quote-name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="quote-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="quote-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="quote-phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-service" class="form-label">Service Needed</label>
+                        <select class="form-select" id="quote-service" required>
+                            <option value="">Select a service</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-location" class="form-label">Location</label>
+                        <select class="form-select" id="quote-location" required>
+                            <option value="">Select your location</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-description" class="form-label">Project Description</label>
+                        <textarea class="form-control" id="quote-description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Quote Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Professional Registration Modal -->
+<div class="modal fade" id="proRegistrationModal" tabindex="-1" aria-labelledby="proRegistrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="proRegistrationModalLabel">Register as a Professional</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="pro-registration-form">
+                    <!-- Business Information -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-business-name" class="form-label">Business Name</label>
+                            <input type="text" class="form-control" id="pro-business-name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-contact-name" class="form-label">Contact Person</label>
+                            <input type="text" class="form-control" id="pro-contact-name" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-email" class="form-label">Business Email</label>
+                            <input type="email" class="form-control" id="pro-email" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-phone" class="form-label">Business Phone</label>
+                            <input type="tel" class="form-control" id="pro-phone" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-services" class="form-label">Services Offered</label>
+                            <select class="form-select" id="pro-services" multiple required>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Cmd to select multiple services</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-locations" class="form-label">Service Areas</label>
+                            <select class="form-select" id="pro-locations" multiple required>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Cmd to select multiple locations</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-license" class="form-label">License Number (if applicable)</label>
+                            <input type="text" class="form-control" id="pro-license">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pro-insurance" class="form-label">Insurance Information</label>
+                            <input type="text" class="form-control" id="pro-insurance">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pro-description" class="form-label">Business Description</label>
+                        <textarea class="form-control" id="pro-description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="pro-terms" required>
+                        <label class="form-check-label" for="pro-terms">
+                            I agree to the Terms and Conditions and Privacy Policy
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Submit Registration</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize modals
+    const quoteModal = new bootstrap.Modal(document.getElementById('quoteModal'));
+    const proModal = new bootstrap.Modal(document.getElementById('proRegistrationModal'));
+    
+    // Add event listeners for modal buttons
+    document.getElementById('getQuoteBtn').addEventListener('click', function() {
+        quoteModal.show();
+    });
+    
+    document.getElementById('registerProBtn').addEventListener('click', function() {
+        proModal.show();
+    });
+    
+    // Populate service and location dropdowns in modals
+    const categories = {{ categories|tojson|safe }};
+    const locations = {{ locations|tojson|safe }};
+    
+    // Populate main search form dropdowns
+    const categorySelect = document.getElementById('category-select');
+    const locationSelect = document.getElementById('location-select');
+    
+    categories.forEach(category => {
+        categorySelect.add(new Option(category, category));
+    });
+    
+    locations.forEach(location => {
+        locationSelect.add(new Option(location, location));
+    });
+    
+    // Populate modal dropdowns
+    const quoteService = document.getElementById('quote-service');
+    const quoteLocation = document.getElementById('quote-location');
+    const proServices = document.getElementById('pro-services');
+    const proLocations = document.getElementById('pro-locations');
+    
+    categories.forEach(category => {
+        quoteService.add(new Option(category, category));
+        proServices.add(new Option(category, category));
+    });
+    
+    locations.forEach(location => {
+        quoteLocation.add(new Option(location, location));
+        proLocations.add(new Option(location, location));
+    });
+    
+    // Global variables for search state
+    let currentPage = 1;
+    let currentCategory = '';
+    let currentLocation = '';
+    let totalResults = 0;
+    let currentCount = 0;
+    let nextPageToken = null;
+
+    // Function to perform search
+    async function performSearch(category, location, pageToken = null) {
+        try {
+            document.getElementById('loading-spinner').style.display = 'block';
+            
+            const params = new URLSearchParams({
+                category: category,
+                location: location,
+                current_count: currentCount
+            });
+            
+            if (pageToken) {
+                params.append('page_token', pageToken);
+                params.append('total_results', totalResults);
+            }
+            
+            const response = await fetch(`/api/search?${params.toString()}`);
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Search failed');
+            }
+            
+            // Update global state
+            totalResults = data.total_results;
+            currentCount = data.current_count;
+            nextPageToken = data.next_page;
+            
+            // Update results display
+            const resultsContainer = document.getElementById('search-results');
+            
+            // Append new results
+            data.places.forEach(place => {
+                const card = createBusinessCard(place);
+                resultsContainer.appendChild(card);
+            });
+            
+            // Update total results count display
+            document.getElementById('total-results').textContent = 
+                `Found ${totalResults} results (showing ${currentCount})`;
+            
+            // Show/hide load more button based on if we have more results and a next page token
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            loadMoreBtn.style.display = (data.has_more && data.next_page) ? 'inline-block' : 'none';
+            
+            // Show results section
+            document.getElementById('search-results-section').style.display = 'block';
+        } catch (error) {
+            console.error('Search error:', error);
+            alert('Search failed. Please try again.');
+        } finally {
+            document.getElementById('loading-spinner').style.display = 'none';
+        }
+    }
+
+    // Function to create business card HTML
+    function createBusinessCard(place) {
+        const div = document.createElement('div');
+        div.className = 'col-md-6 mb-4';
+        div.innerHTML = `
+            <div class="business-card">
+                <div class="card-body">
+                    <h5 class="card-title">${place.name}</h5>
+                    <div class="business-info">
+                        <p><i class="fas fa-map-marker-alt"></i> ${place.address}</p>
+                        ${place.rating ? `
+                            <p>
+                                <span class="rating-stars">
+                                    ${'★'.repeat(Math.round(place.rating))}
+                                    ${'☆'.repeat(5 - Math.round(place.rating))}
+                                </span>
+                                ${place.rating} (${place.reviews} reviews)
+                            </p>
+                        ` : ''}
+                        ${place.phone ? `
+                            <p><i class="fas fa-phone"></i> ${place.phone}</p>
+                        ` : ''}
+                        ${place.website ? `
+                            <p><i class="fas fa-globe"></i> <a href="${place.website}" target="_blank">Visit Website</a></p>
+                        ` : ''}
+                    </div>
+                    ${place.opening_hours ? `
+                        <span class="${place.opening_hours.open_now ? 'open-badge' : 'closed-badge'}">
+                            ${place.opening_hours.open_now ? 'Open Now' : 'Closed'}
+                        </span>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+        return div;
+    }
+
+    // Handle search form submission
+    document.getElementById('search-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Reset search state
+        currentPage = 1;
+        currentCount = 0;
+        nextPageToken = null;
+        document.getElementById('search-results').innerHTML = '';
+        
+        // Get search parameters
+        currentCategory = document.getElementById('category-select').value;
+        currentLocation = document.getElementById('location-select').value;
+        
+        // Perform search
+        await performSearch(currentCategory, currentLocation);
+    });
+
+    // Handle load more button click
+    document.getElementById('load-more-btn').addEventListener('click', async function() {
+        if (nextPageToken) {
+            currentPage++;
+            await performSearch(currentCategory, currentLocation, nextPageToken);
+        }
+    });
+
+    // Handle quote form submission
+    document.getElementById('quote-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('quote-name').value,
+            email: document.getElementById('quote-email').value,
+            phone: document.getElementById('quote-phone').value,
+            service: document.getElementById('quote-service').value,
+            location: document.getElementById('quote-location').value,
+            description: document.getElementById('quote-description').value
+        };
+        
+        try {
+            const response = await fetch('/api/submit-quote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to submit quote');
+            }
+            
+            alert('Quote request submitted successfully! We will contact you soon.');
+            quoteModal.hide();
+            this.reset();
+        } catch (error) {
+            console.error('Error submitting quote:', error);
+            alert('Failed to submit quote. Please try again.');
+        }
+    });
+    
+    // Handle professional registration form submission
+    document.getElementById('pro-registration-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            businessName: document.getElementById('pro-business-name').value,
+            contactName: document.getElementById('pro-contact-name').value,
+            email: document.getElementById('pro-email').value,
+            phone: document.getElementById('pro-phone').value,
+            services: Array.from(document.getElementById('pro-services').selectedOptions).map(opt => opt.value),
+            locations: Array.from(document.getElementById('pro-locations').selectedOptions).map(opt => opt.value),
+            license: document.getElementById('pro-license').value,
+            insurance: document.getElementById('pro-insurance').value,
+            description: document.getElementById('pro-description').value
+        };
+        
+        try {
+            const response = await fetch('/api/register-professional', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Registration failed');
+            }
+            
+            alert('Registration submitted successfully! We will review your application and contact you soon.');
+            proModal.hide();
+            document.getElementById('pro-registration-form').reset();
+            
+        } catch (error) {
+            console.error('Registration error:', error);
+            alert('Registration failed: ' + error.message);
+        }
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<!-- Popular Services Section -->
+<section class="popular-services py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="section-title">Find Top Services in Your Area</h2>
+                <p class="section-subtitle">Discover the best local professionals for your needs</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for service_link in service_links %}
+            <div class="col-md-3">
+                <div class="service-link-wrapper">
+                    <i class="fas {{ service_link.icon }} service-icon"></i>
+                    <div class="service-text">
+                        <div class="get-help">Get help with</div>
+                        <a href="{{ url_for('service_page', slug=service_link.slug) }}" 
+                           class="service-title">
+                            {{ service_link.display_title }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

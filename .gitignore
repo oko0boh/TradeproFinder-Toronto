@@ -50,6 +50,31 @@ logs/
 .coverage
 htmlcov/
 
+# Generated pages
+generated_pages/
+
+# Backup files
+backups/
+
+# Cache files
+__pycache__/
+*.pyc
+
+# Local databases
+*.db
+search_cache.db
+local_cache.db
+contact_requests.db
+quote_requests.db
+pro_registration.db
+service_providers.db
+user_submissions.db
+api_usage.db
+
+# Git related
+.git/
+.github/
+
 # Cache
 .cache/
 .pytest_cache/

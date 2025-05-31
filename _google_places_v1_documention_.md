@@ -1,5 +1,8 @@
-\<google\_api\_key\>AIzaSyA5vbE5wJAch9HFyzHSCmpULUiDhQxf0CU \<google\_api\_key\>  
-\<mongo\_uri\> mongodb+srv://wspsupreme:InoPHpULW6wfThP2@cluster0.spjqm.mongodb.net/ \<mongo\_uri\>
+<!-- SECURITY WARNING: NEVER store API keys or credentials in documentation or code files -->
+<!-- Always use environment variables or secure credential management systems -->
+
+\<google\_api\_key\>[YOUR\_API\_KEY\_GOES\_HERE]\</google\_api\_key\>  
+\<mongo\_uri\>[YOUR\_MONGO\_URI\_GOES\_HERE]\</mongo\_uri\>
 
 \<google\_places\_v1\_documention\>  
 Text Search (New) 

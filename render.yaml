@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: tradepro-finder-toronto
+    env: python
+    buildCommand: |
+      # Install dependencies
+      pip install -r requirements.txt
+      # Create necessary directories
+      mkdir -p logs
+      mkdir -p data
+      # Touch log file to prevent errors
+      touch logs/app.log
+    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-file -
+    plan: free
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: wsgi.py
+      - key: GOOGLE_PLACES_API_KEY
+        sync: false
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    domains:
+      - tradepro-finder-canada.onrender.com

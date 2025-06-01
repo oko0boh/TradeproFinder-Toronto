@@ -48,7 +48,7 @@ class ProductionConfig(BaseConfig):
     
     # Logging
     LOG_LEVEL = 'INFO'
-    LOG_FILE = '/var/log/tradepro-finder/app.log'
+    LOG_FILE = 'logs/app.log'  # Use relative path in the app directory
     LOG_MAX_SIZE = 10485760  # 10MB
     LOG_BACKUPS = 5
     

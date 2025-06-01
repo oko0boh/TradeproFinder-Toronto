@@ -8,11 +8,12 @@ services:
       # Create necessary directories
       mkdir -p logs
       mkdir -p data
-      mkdir -p /var/log/tradepro-finder
       # Touch log files to prevent errors
       touch logs/app.log
-      touch /var/log/tradepro-finder/error.log
-      chmod -R 777 /var/log/tradepro-finder || true
+      touch logs/error.log
+      touch logs/access.log
+      # Ensure logs are writable
+      chmod -R 777 logs || true
     startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-file -
     plan: free
     envVars:

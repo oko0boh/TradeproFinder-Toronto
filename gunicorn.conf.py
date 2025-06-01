@@ -21,8 +21,8 @@ proc_name = 'tradepro-finder'
 pythonpath = '/var/www/tradepro-finder'
 
 # Logging
-accesslog = '/var/log/tradepro-finder/access.log'
-errorlog = '/var/log/tradepro-finder/error.log'
+accesslog = 'logs/access.log'  # Use relative path in the app directory
+errorlog = 'logs/error.log'    # Use relative path in the app directory
 loglevel = 'info'
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 

@@ -10,7 +10,7 @@ from application import create_app
 load_dotenv()
 
 # Create application instance
-app = create_app(os.getenv('FLASK_ENV', 'production'))
+flask_instance = create_app(os.getenv('FLASK_ENV', 'production'))
 
 if __name__ == '__main__':
-    app.run()
+    flask_instance.run()

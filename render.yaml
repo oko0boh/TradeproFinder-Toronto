@@ -14,7 +14,7 @@ services:
       touch logs/access.log
       # Ensure logs are writable
       chmod -R 777 logs || true
-    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-level error
+    startCommand: gunicorn wsgi:flask_instance --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --log-level error
     plan: free
     envVars:
       - key: FLASK_ENV

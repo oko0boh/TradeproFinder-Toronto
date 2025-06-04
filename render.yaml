@@ -25,6 +25,8 @@ services:
         sync: false
       - key: PORT
         value: 10000
+      - key: GUNICORN_PROC_NAME
+        value: tf_app_gunicorn
     healthCheckPath: /
     autoDeploy: true
     disk:

@@ -4,7 +4,7 @@ WSGI entry point for Tradepro Finder Toronto.
 
 import os
 from dotenv import load_dotenv
-from app import create_app
+from application import create_app
 
 # Load environment variables
 load_dotenv()

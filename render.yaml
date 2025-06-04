@@ -27,6 +27,8 @@ services:
         value: 10000
       - key: GUNICORN_PROC_NAME
         value: tf_app_gunicorn
+      - key: GUNICORN_ERRORLOG
+        value: "-"
     healthCheckPath: /
     autoDeploy: true
     disk:

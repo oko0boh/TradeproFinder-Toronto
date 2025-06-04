@@ -21,10 +21,10 @@ keepalive = 2
 # pythonpath = '/var/www/tradepro-finder' # Commented out, Render handles pythonpath
 
 # Logging
-accesslog = 'logs/access.log'  # Use relative path in the app directory
-errorlog = 'logs/error.log'    # Use relative path in the app directory
-loglevel = 'info'
-access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
+# accesslog = 'logs/access.log'  # Commented out for Render default behavior
+# errorlog = 'logs/error.log'    # Commented out for Render default behavior
+# loglevel = 'info'               # Commented out for Render default behavior
+# access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"' # Commented out
 
 # SSL
 # keyfile = '/etc/ssl/private/tradepro-finder.key' # Commented out, Render handles SSL
@@ -32,10 +32,10 @@ access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
 
 # Server mechanics
 daemon = False
-pidfile = '/var/run/tradepro-finder.pid'
+# pidfile = '/var/run/tradepro-finder.pid' # Commented out for Render
 umask = 0
-user = 'www-data'
-group = 'www-data'
+# user = 'www-data'                    # Commented out for Render
+# group = 'www-data'                   # Commented out for Render
 tmp_upload_dir = None
 
 # Security

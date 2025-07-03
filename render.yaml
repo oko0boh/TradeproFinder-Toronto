@@ -3,31 +3,29 @@ services:
     name: tradepro-finder-toronto
     env: python
     buildCommand: |
-      # Install dependencies
+      python -m pip install --upgrade pip
       pip install -r requirements.txt
-      # Create necessary directories
-      mkdir -p logs
-      mkdir -p data
-      # Touch log files to prevent errors
-      touch logs/app.log
-      touch logs/error.log
-      touch logs/access.log
-      # Ensure logs are writable
-      chmod -R 777 logs || true
+      pip install gunicorn
+      mkdir -p logs data generated_pages
+      python generate_seo_pages.py
+    startCommand: gunicorn wsgi:flask_instance --timeout 120
     plan: free
     envVars:
       - key: FLASK_ENV
         value: production
       - key: FLASK_APP
-        value: application.py
+        value: wsgi.py
+      - key: PYTHONUNBUFFERED
+        value: true
       - key: GOOGLE_PLACES_API_KEY
         sync: false
-      - key: PORT
-        value: 10000
+      - key: SECRET_KEY
+        generateValue: true
     healthCheckPath: /
     autoDeploy: true
     disk:
       name: data
+      mountPath: /opt/render/project/data
       mountPath: /data
       sizeGB: 1
     domains:

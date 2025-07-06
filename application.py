@@ -168,6 +168,9 @@ def create_app(config_name='development'):
     return app
 
 # Set up logging
+# Create logs directory if it doesn't exist
+os.makedirs('logs', exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',

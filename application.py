@@ -9,6 +9,7 @@ from error_handlers import init_error_handling
 from database_manager import DatabaseManager
 from local_cache import LocalCache
 from api_monitor import APIMonitor
+from rollback_manager import RollbackManager
 import logging
 from logging.handlers import RotatingFileHandler
 import traceback

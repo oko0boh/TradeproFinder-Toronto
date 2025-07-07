@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request, render_template, abort, make_response
 from flask_cors import CORS
 import os
 import sys
+import sqlite3
+import pandas as pd
 from dotenv import load_dotenv
 from config import config
 from security import init_security, validate_input, CONTACT_FORM_RULES, QUOTE_REQUEST_RULES, PRO_REGISTRATION_RULES
@@ -295,7 +297,7 @@ except Exception as e:
     LOCATIONS = []
 
 # Initialize contact requests database
-contact_db = connect('contact_requests.db')
+contact_db = sqlite3.connect('contact_requests.db')
 contact_db.execute('''
     CREATE TABLE IF NOT EXISTS contact_requests (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

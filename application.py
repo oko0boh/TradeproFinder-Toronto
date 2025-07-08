@@ -18,6 +18,38 @@ import traceback
 from datetime import datetime, timedelta
 import json
 
+# SQLite Database wrapper class
+class SQLiteDatabase:
+    def __init__(self, db_name):
+        self.db_name = db_name
+        self.conn = None
+    
+    def connect(self):
+        if self.conn is None:
+            self.conn = sqlite3.connect(self.db_name)
+            self.conn.row_factory = sqlite3.Row
+        return self.conn
+    
+    def execute(self, query, params=()):
+        conn = self.connect()
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        conn.commit()
+        return cursor
+    
+    def query(self, query, params=()):
+        cursor = self.execute(query, params)
+        return cursor.fetchall()
+    
+    def query_one(self, query, params=()):
+        cursor = self.execute(query, params)
+        return cursor.fetchone()
+    
+    def close(self):
+        if self.conn:
+            self.conn.close()
+            self.conn = None
+
 def create_app(config_name='development'):
     """Create Flask application."""
     

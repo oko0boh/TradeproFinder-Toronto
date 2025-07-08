@@ -1,0 +1,10 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "python generate_seo_pages.py"
+
+[deploy]
+startCommand = "gunicorn wsgi:flask_instance --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

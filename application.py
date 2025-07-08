@@ -201,6 +201,14 @@ def create_app(config_name='development'):
         """Serve robots.txt."""
         return send_from_directory(app.static_folder, 'robots.txt')
 
+    # Initialize databases within app context
+    with app.app_context():
+        try:
+            init_service_providers_db()
+            init_search_cache_db()
+        except Exception as e:
+            logger.error(f"Error initializing databases: {str(e)}")
+
     return app
 
 # Set up logging
@@ -432,10 +440,7 @@ def init_search_cache_db():
             conn.close()
         raise e
 
-# Initialize all databases when app starts
-with app.app_context():
-    init_service_providers_db()
-    init_search_cache_db()
+# Database initialization will be handled in create_app() function
 
 # Initialize pro registration database
 pro_db = SQLiteDatabase('pro_registration.db')

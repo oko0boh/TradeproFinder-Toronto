@@ -1,4 +1,4 @@
-import pandas as pd
+import csv
 from datetime import datetime
 from urllib.parse import quote
 
@@ -14,8 +14,15 @@ class SitemapGenerator:
     
     def generate_sitemap_xml(self, services_file, locations_file):
         """Generate sitemap.xml content."""
-        services_df = pd.read_csv(services_file)
-        locations_df = pd.read_csv(locations_file)
+        services = []
+        with open(services_file, 'r', encoding='utf-8') as f:
+            csv_reader = csv.DictReader(f)
+            services = list(csv_reader)
+            
+        locations = []
+        with open(locations_file, 'r', encoding='utf-8') as f:
+            csv_reader = csv.DictReader(f)
+            locations = list(csv_reader)
         
         # Start sitemap XML
         sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -25,8 +32,15 @@ class SitemapGenerator:
         sitemap += self._create_url_entry(self.base_url)
         
         # Add service-location combination pages
-        for service in services_df['Category']:
-            for location in locations_df['Location']:
+        for service_item in services:
+            service = service_item.get('Category', '')
+            if not service:
+                continue
+                
+            for location_item in locations:
+                location = location_item.get('Location', '')
+                if not location:
+                    continue
                 url_slug = self.generate_url_slug(service, location)
                 full_url = f"{self.base_url}/{url_slug}"
                 sitemap += self._create_url_entry(full_url)

@@ -1,5 +1,5 @@
 import os
-import pandas as pd
+import csv
 from .seo_content_generator import SEOContentGenerator
 from jinja2 import Environment, FileSystemLoader
 from flask import Flask
@@ -28,14 +28,21 @@ class PageGenerator:
         
     def generate_pages(self, services_file, locations_file):
         """Generate all service-location combination pages."""
-        services_df = pd.read_csv(services_file)
-        locations_df = pd.read_csv(locations_file)
+        services = []
+        with open(services_file, 'r', encoding='utf-8') as f:
+            csv_reader = csv.DictReader(f)
+            services = list(csv_reader)
+            
+        locations = []
+        with open(locations_file, 'r', encoding='utf-8') as f:
+            csv_reader = csv.DictReader(f)
+            locations = list(csv_reader)
         
         # Create output directory if it doesn't exist
         os.makedirs(self.output_dir, exist_ok=True)
         
         # Get top 25 services
-        top_services = services_df.head(25)['Category'].tolist()
+        top_services = [item['Category'] for item in services[:25] if 'Category' in item]
         
         # Generate pages for each service-location combination
         for service in top_services:

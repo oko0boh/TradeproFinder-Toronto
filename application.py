@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os
 import sys
 import sqlite3
-import pandas as pd
+import csv
 from dotenv import load_dotenv
 from config import config
 from security import init_security, validate_input, CONTACT_FORM_RULES, QUOTE_REQUEST_RULES, PRO_REGISTRATION_RULES
@@ -311,15 +311,21 @@ def load_locations():
 try:
     # Load categories
     categories_file = os.path.join(os.path.dirname(__file__), 'data', 'tradepro_finder_toronto_keywords.csv')
-    categories_df = pd.read_csv(categories_file)
-    CATEGORIES = categories_df['Category'].tolist()  # Use Category column directly
+    categories = []
+    with open(categories_file, 'r', encoding='utf-8') as f:
+        csv_reader = csv.DictReader(f)
+        categories = list(csv_reader)
+    CATEGORIES = [item['Category'] for item in categories if 'Category' in item]  # Extract Category column
     logger.info(f'Successfully loaded {len(CATEGORIES)} categories')
     logger.info(f'Categories: {CATEGORIES}')
 
     # Load locations
     locations_file = os.path.join(os.path.dirname(__file__), 'data', 'tradepro_finder_cities.csv')
-    locations_df = pd.read_csv(locations_file)
-    LOCATIONS = locations_df['Location'].tolist()
+    locations = []
+    with open(locations_file, 'r', encoding='utf-8') as f:
+        csv_reader = csv.DictReader(f)
+        locations = list(csv_reader)
+    LOCATIONS = [item['Location'] for item in locations if 'Location' in item]  # Extract Location column
     logger.info(f'Successfully loaded {len(LOCATIONS)} locations')
     logger.info(f'Locations: {LOCATIONS}')
 

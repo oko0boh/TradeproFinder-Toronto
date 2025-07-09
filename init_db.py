@@ -41,6 +41,20 @@ def init_service_providers_db():
         )
     ''')
     
+    # Create quote_requests table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS quote_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            phone TEXT,
+            service TEXT,
+            location TEXT,
+            description TEXT,
+            timestamp TEXT
+        )
+    ''')
+    
     # Check if the table is empty
     cursor.execute('SELECT COUNT(*) FROM service_providers')
     count = cursor.fetchone()[0]

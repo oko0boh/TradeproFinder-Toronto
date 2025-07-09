@@ -201,10 +201,9 @@ def create_app(config_name='development'):
     @app.before_request
     def before_request():
         """Pre-request processing."""
-        # Force HTTPS in production
-        if not request.is_secure and app.config['ENV'] == 'production':
-            url = request.url.replace('http://', 'https://', 1)
-            return redirect(url, code=301)
+        # Railway handles HTTPS at the proxy level, so we don't need to redirect
+        # This prevents redirect loops
+        pass
     
     @app.after_request
     def after_request(response):

@@ -2,7 +2,7 @@
 Flask application for Tradepro Finder Toronto.
 """
 
-from flask import Flask
+from flask import Flask, request, redirect
 from flask_cors import CORS
 import os
 import sys

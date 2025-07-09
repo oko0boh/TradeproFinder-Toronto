@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} in {{ location }} | Tradepro Finder Toronto{% endblock %}
+
+{% block head %}
+<style>
+    /* Hero Section Styles */
+    .hero-section {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        padding: 5rem 0;
+        color: white;
+        text-align: center;
+        margin-top: -76px;
+        padding-top: calc(76px + 5rem);
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+    }
+
+    /* Provider Card Styles */
+    .provider-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s;
+    }
+
+    .provider-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .provider-info {
+        margin-bottom: 1rem;
+    }
+
+    .provider-info i {
+        width: 20px;
+        color: #3498db;
+        margin-right: 0.5rem;
+    }
+
+    .rating-stars {
+        color: #f1c40f;
+        margin-right: 0.5rem;
+    }
+
+    .contact-btn {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Top {{ category }} in {{ location }}</h1>
+        <p>Find the best {{ category }} professionals in {{ location }} for your needs</p>
+    </div>
+</section>
+
+<!-- Providers Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">{{ category }} Professionals in {{ location }}</h2>
+                
+                {% if providers %}
+                    {% for provider in providers %}
+                    <div class="provider-card p-4 mb-4">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3>{{ provider.name }}</h3>
+                                
+                                <div class="provider-info">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>{{ provider.address }}</span>
+                                </div>
+                                
+                                <div class="provider-info">
+                                    <i class="fas fa-phone"></i>
+                                    <span>{{ provider.phone }}</span>
+                                </div>
+                                
+                                {% if provider.website %}
+                                <div class="provider-info">
+                                    <i class="fas fa-globe"></i>
+                                    <a href="{{ provider.website }}" target="_blank">Visit Website</a>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="provider-info">
+                                    <span class="rating-stars">
+                                        {% for i in range(provider.rating|int) %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% if provider.rating % 1 != 0 %}
+                                            <i class="fas fa-star-half-alt"></i>
+                                        {% endif %}
+                                    </span>
+                                    <span>{{ provider.rating }} ({{ provider.reviews }} reviews)</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-primary contact-btn" onclick="showQuoteModal('{{ provider.name }}', '{{ category }}', '{{ location }}')">
+                                    Contact Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        No {{ category }} professionals found in {{ location }}. Please try another search.
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card p-4 mb-4">
+                    <h3>Need a {{ category }} Professional?</h3>
+                    <p>Get connected with top-rated {{ category }} professionals in {{ location }} today.</p>
+                    <button class="btn btn-success" onclick="showQuoteModal('', '{{ category }}', '{{ location }}')">
+                        Request a Quote
+                    </button>
+                </div>
+                
+                <div class="card p-4">
+                    <h3>Why Choose Us</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Verified professionals</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Free quotes</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Quality service guarantee</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Local experts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quote Modal -->
+<div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quoteModalLabel">Get a Professional Quote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="quoteForm">
+                    <div class="mb-3">
+                        <label for="quote-name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="quote-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="quote-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="quote-phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-service" class="form-label">Service Type</label>
+                        <input type="text" class="form-control" id="quote-service" value="{{ category }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="quote-location" value="{{ location }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quote-description" class="form-label">Project Description</label>
+                        <textarea class="form-control" id="quote-description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showQuoteModal(providerName, category, location) {
+        // Set the service and location in the form
+        document.getElementById('quote-service').value = category;
+        document.getElementById('quote-location').value = location;
+        
+        // Show the modal
+        const quoteModal = new bootstrap.Modal(document.getElementById('quoteModal'));
+        quoteModal.show();
+    }
+    
+    // Handle quote form submission
+    document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('quote-name').value,
+            email: document.getElementById('quote-email').value,
+            phone: document.getElementById('quote-phone').value,
+            service: document.getElementById('quote-service').value,
+            location: document.getElementById('quote-location').value,
+            description: document.getElementById('quote-description').value
+        };
+        
+        try {
+            const response = await fetch('/api/submit-quote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert('Your quote request has been submitted successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+            } else {
+                alert('Error: ' + (result.error || 'Failed to submit quote request'));
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+{% endblock %}

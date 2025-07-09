@@ -2,24 +2,26 @@
 Flask application for Tradepro Finder Toronto.
 """
 
-from flask import Flask, request, redirect
-from flask_cors import CORS
 import os
 import sys
 import logging
-import sqlite3
 from datetime import datetime
-
-# Import the Blueprint
+from flask import Flask, request, redirect
+from flask_cors import CORS
+from flask_seasurf import SeaSurf
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from config import config
 from routes import main as main_blueprint
-from security import init_security
-from error_handlers import init_error_handling
-from database_manager import DatabaseManager
 from local_cache import LocalCache
 from api_monitor import APIMonitor
-from config import config
+from database_manager import DatabaseManager
+from init_db import init_service_providers_db, init_search_cache_db
+from security import init_security
+from error_handlers import init_error_handling
 from rollback_manager import RollbackManager
 from logging.handlers import RotatingFileHandler
+import sqlite3
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)
@@ -176,6 +178,10 @@ def create_app(config_name='development'):
     
     # Load configuration
     app.config.from_object(config[config_name])
+    
+    # Initialize databases
+    init_service_providers_db()
+    init_search_cache_db()
     
     # Initialize extensions
     init_security(app)

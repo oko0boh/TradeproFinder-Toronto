@@ -2,7 +2,7 @@
 Routes for Tradepro Finder Toronto.
 """
 
-from flask import Blueprint, render_template, jsonify, request, abort, send_from_directory
+from flask import Blueprint, render_template, jsonify, request, abort, send_from_directory, redirect, url_for
 import os
 import json
 import sqlite3

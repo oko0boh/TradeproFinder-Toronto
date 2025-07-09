@@ -187,13 +187,13 @@ def create_app(config_name='development'):
     })
     
     # Initialize database
-    db = DatabaseManager(app)
+    db = DatabaseManager()
     
     # Initialize cache
-    cache = LocalCache(app)
+    cache = LocalCache()
     
     # Initialize API monitor
-    api_monitor = APIMonitor(app)
+    api_monitor = APIMonitor()
     
     # Register blueprint
     app.register_blueprint(main_blueprint)

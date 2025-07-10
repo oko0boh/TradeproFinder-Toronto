@@ -6,7 +6,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 import traceback
-from flask import render_template, jsonify, current_app
+from flask import render_template, jsonify, current_app, request
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 

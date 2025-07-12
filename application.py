@@ -23,8 +23,8 @@ from rollback_manager import RollbackManager
 from logging.handlers import RotatingFileHandler
 import sqlite3
 # Import Google Places API and Search Service
-from utils.google_places_api import GooglePlacesAPI
-from utils.search_service import SearchService
+from google_places_api import GooglePlacesAPI
+from search_service import SearchService
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)

@@ -7,7 +7,7 @@
                 <div class="service-item">
                     <i class="fas {{ service_link.icon }} service-icon"></i>
                     <div class="get-help-text">Get help with</div>
-                    <a href="{{ url_for('service_page', slug=service_link.slug) }}" class="service-title">
+                    <a href="{{ url_for('main.service_page', slug=service_link.slug) }}" class="service-title">
                         {{ service_link.display_title }}
                     </a>
                 </div>

@@ -17,7 +17,7 @@ def load_categories():
     """Load service categories from database."""
     categories = []
     try:
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         cursor = conn.cursor()
         cursor.execute('SELECT DISTINCT category FROM service_providers ORDER BY category')
         categories = [row[0] for row in cursor.fetchall()]
@@ -30,7 +30,7 @@ def load_locations():
     """Load locations from database."""
     locations = []
     try:
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         cursor = conn.cursor()
         cursor.execute('SELECT DISTINCT location FROM service_providers ORDER BY location')
         locations = [row[0] for row in cursor.fetchall()]
@@ -56,7 +56,7 @@ def get_service_providers(category, location):
     """Get service providers from database."""
     providers = []
     try:
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute(
@@ -208,7 +208,7 @@ def submit_quote():
             
     try:
         # Save to database
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         cursor = conn.cursor()
         
         cursor.execute(
@@ -251,7 +251,7 @@ def register_professional():
             
     try:
         # Save to database
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         cursor = conn.cursor()
         
         cursor.execute(

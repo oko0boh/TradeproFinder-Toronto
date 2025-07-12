@@ -22,6 +22,9 @@ from error_handlers import init_error_handling
 from rollback_manager import RollbackManager
 from logging.handlers import RotatingFileHandler
 import sqlite3
+# Import Google Places API and Search Service
+from utils.google_places_api import GooglePlacesAPI
+from utils.search_service import SearchService
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)
@@ -49,7 +52,7 @@ def init_service_providers_db():
     """Initialize the service providers database."""
     conn = None
     try:
-        conn = sqlite3.connect('data/service_providers.db')
+        conn = sqlite3.connect('service_providers.db')
         cursor = conn.cursor()
         
         # Create service providers table
@@ -200,6 +203,11 @@ def create_app(config_name='development'):
     
     # Initialize API monitor
     api_monitor = APIMonitor()
+    
+    # Initialize Google Places API and search service
+    google_api_key = os.environ.get('GOOGLE_PLACES_API_KEY')
+    app.google_places = GooglePlacesAPI(api_key=google_api_key)
+    app.search_service = SearchService(db_manager=db, api_key=google_api_key)
     
     # Register blueprint
     app.register_blueprint(main_blueprint)

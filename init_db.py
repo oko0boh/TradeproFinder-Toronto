@@ -19,9 +19,8 @@ def ensure_directory_exists(directory):
 
 def init_service_providers_db():
     """Initialize the service providers database."""
-    ensure_directory_exists('data')
-    
-    conn = sqlite3.connect('data/service_providers.db')
+    # Database is now in root directory
+    conn = sqlite3.connect('service_providers.db')
     cursor = conn.cursor()
     
     # Create service_providers table if it doesn't exist

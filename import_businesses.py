@@ -43,7 +43,7 @@ def import_from_csv(csv_file):
     ensure_directory_exists('data')
     
     # Connect to database
-    conn = sqlite3.connect('data/service_providers.db')
+    conn = sqlite3.connect('service_providers.db')
     cursor = conn.cursor()
     
     # Create table if it doesn't exist
@@ -123,7 +123,7 @@ def import_from_csv(csv_file):
 def export_to_csv(output_file):
     """Export all business data to a CSV file."""
     # Connect to database
-    conn = sqlite3.connect('data/service_providers.db')
+    conn = sqlite3.connect('service_providers.db')
     cursor = conn.cursor()
     
     try:

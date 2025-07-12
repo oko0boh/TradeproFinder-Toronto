@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services - Tradepro Finder Toronto{% endblock %}
+
+{% block head %}
+<style>
+    /* Hero Section Styles */
+    .hero-section {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        padding: 5rem 0;
+        color: white;
+        text-align: center;
+        margin-top: -76px;
+        padding-top: calc(76px + 5rem);
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+    }
+
+    /* Service Card Styles */
+    .service-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s;
+        height: 100%;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .service-card-body {
+        padding: 1.5rem;
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+        color: #3498db;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1>Our Professional Services</h1>
+                <p>Connect with verified experts for all your home improvement and repair needs</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Explore Our Service Categories</h2>
+                <p class="lead">Tradepro Finder Toronto connects you with qualified professionals across a wide range of service categories.</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for category in categories %}
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-card-body text-center">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>{{ category }}</h3>
+                        <p class="mb-4">Find top-rated {{ category }} professionals in your area.</p>
+                        <a href="{{ url_for('main.search') }}?category={{ category }}" class="btn btn-primary">Find {{ category }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Can't Find What You're Looking For?</h2>
+                <p class="lead mb-4">Our network of professionals is constantly growing. Contact us if you need help finding a specific service.</p>
+                <a href="{{ url_for('main.contact') }}" class="btn btn-primary btn-lg">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

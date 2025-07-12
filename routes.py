@@ -149,49 +149,37 @@ def get_locations():
 
 @main.route('/api/search', methods=['GET'])
 def search():
-    """Search for businesses based on category and location."""
+    """Search for businesses based on category and location with Google Places API integration."""
     category = request.args.get('category')
     location = request.args.get('location')
+    query = request.args.get('query', '')
     
     if not category or not location:
         return jsonify({'error': 'Missing required parameters'}), 400
         
     try:
-        # Check cache first
-        conn = sqlite3.connect('data/search_cache.db')
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
+        # Use the hybrid search service (checks cache, then Google Places API if needed)
+        from flask import current_app
+        search_service = current_app.search_service
         
-        # Try to get from cache
-        cursor.execute(
-            'SELECT results, timestamp FROM search_cache WHERE service = ? AND location = ?',
-            (category, location)
-        )
-        
-        cache_row = cursor.fetchone()
-        
-        if cache_row:
-            # Check if cache is still valid (less than 24 hours old)
-            timestamp = datetime.fromisoformat(cache_row['timestamp'])
-            now = datetime.now()
-            
-            if (now - timestamp).total_seconds() < 86400:  # 24 hours
-                results = json.loads(cache_row['results'])
-                conn.close()
-                return jsonify(results)
-        
-        # Get service providers from database
-        providers = get_service_providers(category, location)
+        # Search for service providers using our hybrid approach
+        providers = search_service.search_service_providers(category, location, query)
         
         # Format results
         results = {
             'category': category,
             'location': location,
+            'query': query,
             'providers': providers,
-            'total': len(providers)
+            'total': len(providers),
+            'source': 'hybrid'  # Indicates this is from our hybrid search system
         }
         
-        # Cache results
+        # Cache results in the search_cache database for quick retrieval
+        # This is separate from the Google Places API cache which is stored in google_places_cache table
+        conn = sqlite3.connect('data/search_cache.db')
+        cursor = conn.cursor()
+        
         cursor.execute(
             'INSERT OR REPLACE INTO search_cache (service, location, results, timestamp) VALUES (?, ?, ?, ?)',
             (category, location, json.dumps(results), datetime.now().isoformat())
@@ -204,7 +192,7 @@ def search():
         
     except Exception as e:
         logging.error(f"Search error: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': 'An error occurred during search', 'details': str(e)}), 500
 
 @main.route('/api/submit-quote', methods=['POST'])
 def submit_quote():
@@ -293,6 +281,12 @@ def register_professional():
     except Exception as e:
         logging.error(f"Error registering professional: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@main.route('/services')
+def services():
+    """Serve the services page."""
+    categories = load_categories()
+    return render_template('services.html', categories=categories)
 
 @main.route('/about')
 def about():
